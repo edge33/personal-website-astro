@@ -38,5 +38,5 @@ export default defineConfig({
     ...(enableSitemap ? { integrations: [sitemap()] } : {}),
 
     output: 'server',
-    adapter: vercel({ isr: true }),
+    adapter: vercel({ isr: { expiration: 60 * 5 } }),
 });
