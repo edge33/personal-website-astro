@@ -4,6 +4,7 @@ import { getPosts as getNotionPosts, type NotionPage } from '../notion';
 import Layout from '../layouts/Layout.astro';
 import plainwhiteConfig from '../plainwhite.config';
 import formatDate from '../utils/formatDate';
+import Search from '../components/Search/Search.astro';
 
 const getPages = async () => {
     let cursor: string | null = null;
@@ -24,10 +25,10 @@ const { show_excerpts } = plainwhiteConfig;
 
 <Layout title="Welcome to Astro." pageType="home">
     <ul class="posts">
-        <!-- <li class="posts-labelgroup" id="posts-labelgroup">
+        <li class="posts-labelgroup" id="posts-labelgroup">
             <h1 id="posts-label">posts</h1>
             <Search />
-        </li> -->
+        </li>
 
         {
             pages.map((p) => (
@@ -54,5 +55,8 @@ const { show_excerpts } = plainwhiteConfig;
                 </li>
             ))
         }
+        <span>
+            Page generated at{new Date().toLocaleString()}
+        </span>
     </ul>
 </Layout>
