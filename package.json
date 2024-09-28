@@ -11,20 +11,27 @@
     "lint": "eslint --fix \"src/**/*.{js,ts,jsx,tsx,astro}\""
   },
   "dependencies": {
+    "@astrojs/vercel": "^7.8.1",
     "@astrojs/check": "^0.9.3",
     "@astrojs/sitemap": "^3.0.3",
-    "astro": "^4.15.8",
-    "typescript": "^5.6.2"
-  },
-  "devDependencies": {
+    "@notionhq/client": "^2.2.15",
+    "@shikijs/transformers": "^1.19.0",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
     "@typescript-eslint/parser": "^8.6.0",
+    "astro": "^4.15.8",
     "eslint": "^9.11.0",
     "eslint-plugin-astro": "^1.2.4",
     "eslint-plugin-jsx-a11y": "^6.10.0",
+    "marked": "^14.1.2",
+    "marked-shiki": "^1.1.1",
+    "notion-to-md": "^3.1.1"
+  },
+  "devDependencies": {
     "prettier": "^3.3.3",
     "prettier-config-standard": "^7.0.0",
     "prettier-plugin-astro": "^0.14.1",
+    "shiki": "^1.19.0",
+    "typescript": "^5.6.2",
     "typescript-eslint": "^8.7.0"
   },
   "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"

@@ -1,61 +1,66 @@
 ---
-import getPosts from '../getPosts';
-import Layout from '../layouts/Layout.astro';
-import plainwhiteConfig from '../plainwhite.config';
-import formatDate from '../utils/formatDate';
+import Layout from '../../layouts/Layout.astro';
+import { getNotionPage } from '../../notion';
+import plainwhiteConfig from '../../plainwhite.config';
+import formatDate from '../../utils/formatDate';
 
-export const getStaticPaths = async () => {
-    const posts = await getPosts();
-    return posts.map((entry) => ({
-        params: { slug: entry.slug },
-        props: { entry },
-    }));
-};
+const { slug } = Astro.params;
+
+
+if (!slug) {
+    return Astro.redirect('/404');
+}
+
+const response = await getNotionPage(slug);
+
+
+if (!response) {
+    return Astro.redirect('/404');
+}
+
+const {html, pageProp} = response
 
 const {
     plainwhite: { disqus_shortname },
 } = plainwhiteConfig;
 
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+
 ---
 
-<Layout title={entry.data.title} pageType="post">
+<Layout title={pageProp.title} pageType="post">
     <div class="post-container">
-        <a class="post-link" href={`${entry.slug}`}>
-            <h2 class="post-title">{entry.data.title}</h2>
+        <a class="post-link" href={slug}>
+            <h2 class="post-title">{pageProp.title}</h2>
         </a>
         <div class="post-meta">
             <div class="post-date">
                 <i class="icon-calendar"></i>{
-                    formatDate(entry.data.date.split(' ')[0])
+                    formatDate(pageProp.date.split(' ')[0])
                 }
             </div>
             {
-                entry.data.categories.split(' ').length && (
+                pageProp.categories.length && (
                     <ul class="post-categories">
-                        {entry.data.categories.split(' ').map((c: unknown) => (
+                        {pageProp.categories.map((c) => (
                             <li>{c}</li>
                         ))}
                     </ul>
                 )
             }
         </div>
-        <div class="post">
-            <Content />
-        </div>
+        <div class="post" set:html={html} />
         {disqus_shortname &&
             <>
                 <div id="disqus_thread" style="margin-top:25px"></div>
                 <script is:inline define:vars={{ disqus_shortname }}>
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const disqus_config = function () {
-    this.page.url = '{{ page.url | absolute_url }}';
-    this.page.identifier = '{{ page.url | absolute_url }}';
-};
+                        this.page.url = '{{ page.url | absolute_url }}';
+                        this.page.identifier = '{{ page.url | absolute_url }}';
+                    };
                     (function () {
                         const d = document,
-        s = d.createElement('script');
+                            s = d.createElement('script');
                         s.src = `https://${disqus_shortname}.disqus.com/embed.js`;
                         s.setAttribute('data-timestamp', +new Date());
                         (d.head || d.body).appendChild(s);
@@ -67,8 +72,7 @@ const { Content } = await entry.render();
                         rel="nofollow">comments powered by Disqus.</a
                     >
                 </noscript>
-            </>
+            </>         
         }
-
     </div>
 </Layout>

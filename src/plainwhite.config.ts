@@ -6,6 +6,9 @@ export default {
         'Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.\n',
     show_excerpts: true,
 
+    NOTION_TOKEN: import.meta.env.NOTION_TOKEN,
+    NOTION_CONTENT_DATABASE_ID: import.meta.env.NOTION_CONTENT_DATABASE_ID,
+
     plainwhite: {
         name: 'Adam Denisov',
         tagline: 'Developer. Designer',
@@ -16,7 +19,7 @@ export default {
             month: 'short' as const,
         },
         sitemap: true, // set to true to generate sitemap.xml content
-        search: true, // set to true to enable searchbar
+        search: false, // set to true to enable     searchbar
         dark_mode: true, // set to true to add dark mode toggle
         portfolio_image: 'assets/portfolio.webp', // the path from the base directory of the site to the image to display (no / at the start)
         portfolio_image_dark: '',

@@ -28,8 +28,8 @@ html.dark {
 	color: #ddd;
 }
 
-.dark .social [class^="icon-"],
-.dark * .social [class^="icon-"] {
+.dark .social [class^=icon-],
+.dark * .social [class^=icon-] {
 	color: #f6f6f6;
 }
 

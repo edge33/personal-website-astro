@@ -1,4 +1,5 @@
 @import "ext/normalize";
+@import "ext/fonts";
 
 *,
 *:before,
@@ -390,4 +391,30 @@ footer {
 .astro-code {
   margin: 0;
   padding: 21px 20px;
+}
+
+/* THIS IS SHIKI CONFIG FOR DARK MODE AND FOR STYLING THE HIGHTLIGHTING */
+
+pre {
+  overflow: auto;
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  /* Optional, if you also want font styles */
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.shiki {
+  padding: 20px 20px;
+      line-height: 1.4em;
+  code {  
+    font-family: 'Consolas', Menlo, monospace;
+    line-height: 1.4em;
+    tab-size: 4;
+  }
 }

@@ -1,8 +1,17 @@
 import type { APIRoute } from 'astro';
-import getPosts from '../getPosts';
 
 export const GET: APIRoute = async () => {
-    const posts = await getPosts();
+    const posts: {
+        slug: string;
+        body: string;
+        data: {
+            title: string;
+            subTitle: string;
+            categories: string[];
+            date: string;
+            tags: string[];
+        };
+    }[] = [];
 
     const json = JSON.stringify(
         posts.map(

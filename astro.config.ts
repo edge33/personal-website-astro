@@ -2,13 +2,17 @@ import { defineConfig } from 'astro/config';
 import plainwhiteConfig from './src/plainwhite.config';
 import sitemap from '@astrojs/sitemap';
 
+import vercel from '@astrojs/vercel/serverless';
+
 const {
     plainwhite: { sitemap: enableSitemap },
 } = plainwhiteConfig;
 
 // https://astro.build/config
 export default defineConfig({
+    // output: 'server',
     site: 'http://localhost',
+
     markdown: {
         shikiConfig: {
             // Choose from Shiki's built-in themes (or add your own)
@@ -28,6 +32,11 @@ export default defineConfig({
             wrap: true,
         },
     },
-    ...(enableSitemap ? { integrations: [sitemap()] } : {}),
+
     // integrations: [sitemap()],
+    // integrations: [sitemap()],
+    ...(enableSitemap ? { integrations: [sitemap()] } : {}),
+
+    output: 'server',
+    adapter: vercel({ isr: true }),
 });
