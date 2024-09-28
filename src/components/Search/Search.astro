@@ -40,7 +40,12 @@ const { searchItems } = Astro.props;
 
         $searchbar.addEventListener('input', (event) => {
             const searchValue = event.target.value.toLowerCase();
+
             $searchResults.innerHTML = '';
+            if (searchValue.trim().length === 0) {
+                return;
+            }
+
             const results = searchItems.filter((pageProp) => {
                 const { title, slug, date, categories, excerpt } = pageProp;
 
