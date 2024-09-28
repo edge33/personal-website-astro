@@ -1,5 +1,4 @@
 ---
-export const prerender = true;
 // This import needs to stay on top to prevent css clashes
 import Search from '../components/Search/Search.astro';
 import { getAllNotionPages } from '../notion';
@@ -12,13 +11,21 @@ const pages = await getAllNotionPages();
 const { show_excerpts } = plainwhiteConfig;
 ---
 
-<Layout title="Welcome to Astro." pageType="home">
+<Layout title="Home" pageType="home">
+    <div class="posts">
+        <p>
+            Hi, my name is Francesco Maida, And I am a full stack software
+            engineer, please find my resume <a
+                href={import.meta.env.RESUME_URL}
+                target="_blank">here</a
+            >
+        </p>
+    </div>
     <ul class="posts">
         <li class="posts-labelgroup" id="posts-labelgroup">
             <h1 id="posts-label">posts</h1>
             <Search searchItems={pages} />
         </li>
-
         {
             pages.map((p) => (
                 <li>
