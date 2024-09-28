@@ -10,9 +10,7 @@ const {
 
 // https://astro.build/config
 export default defineConfig({
-    // output: 'server',
-    site: 'http://localhost',
-
+    site: 'https://efem.dev',
     markdown: {
         shikiConfig: {
             // Choose from Shiki's built-in themes (or add your own)
@@ -38,5 +36,5 @@ export default defineConfig({
     ...(enableSitemap ? { integrations: [sitemap()] } : {}),
 
     output: 'server',
-    adapter: vercel({ isr: true }),
+    adapter: vercel({ isr: { expiration: 60 * 5 } }),
 });

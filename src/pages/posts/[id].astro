@@ -1,31 +1,23 @@
 ---
-import type { GetStaticPaths } from "astro";
+import type { GetStaticPaths } from 'astro';
 import Layout from '../../layouts/Layout.astro';
-import { getNotionPage, getPosts, type NotionPage } from '../../notion';
-import plainwhiteConfig from '../../plainwhite.config';
+import { getAllNotionPages, getNotionPageMD } from '../../notion';
+// import plainwhiteConfig from '../../plainwhite.config';
 import formatDate from '../../utils/formatDate';
 
-export const getStaticPaths =( async () => {
-    let cursor: string | null = null;
-    const pages: NotionPage[] = [];
-    do {
-        const response = await getPosts({ currentPageCursor: cursor });
-    
-        cursor = response.nextPageCursor;
-        pages.push(...response.pages);
-    } while (cursor);
+export const getStaticPaths = (async () => {
+    const notionPages = await getAllNotionPages();
 
-    return pages.map((p) => ({ params: { id: p.id } }));
+    return notionPages.map((p) => ({ params: { id: p.id } }));
 }) satisfies GetStaticPaths;
 
-
-const {
-    plainwhite: { disqus_shortname },
-} = plainwhiteConfig;
+// const {
+//     plainwhite: { disqus_shortname },
+// } = plainwhiteConfig;
 
 const { id } = Astro.params;
 
-const data = await getNotionPage(id);
+const data = await getNotionPageMD(id);
 
 if (!data) {
     return Astro.redirect('/404');
@@ -34,7 +26,7 @@ if (!data) {
 const { html, pageProp } = data;
 ---
 
-<Layout title={'test'} pageType="post">
+<Layout title={pageProp.title} pageType="post">
     <div class="post-container">
         <a class="post-link" href={id}>
             <h2 class="post-title">{pageProp.title}</h2>
@@ -56,7 +48,7 @@ const { html, pageProp } = data;
             }
         </div>
         <div class="post" set:html={html} />
-        {disqus_shortname &&
+        <!-- {disqus_shortname &&
             <>
                 <div id="disqus_thread" style="margin-top:25px"></div>
                 <script is:inline define:vars={{ disqus_shortname }}>
@@ -80,6 +72,9 @@ const { html, pageProp } = data;
                     >
                 </noscript>
             </>         
-        }
+        } -->
+        <span>
+            Page generated at {new Date().toLocaleString()}
+        </span>
     </div>
 </Layout>

@@ -12,6 +12,8 @@ interface Props {
 const { title, pageType } = Astro.props;
 
 const {
+    title: websiteTitle,
+    description,
     plainwhite: {
         sitemap,
         html_lang,
@@ -30,7 +32,7 @@ const condensedClass = condensed_mobile.includes(pageType) ? 'condensed' : '';
 <html lang={html_lang}>
     <head>
         <meta charset="UTF-8" />
-        <meta name="description" content="Astro description" />
+        <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <link
@@ -39,9 +41,9 @@ const condensedClass = condensed_mobile.includes(pageType) ? 'condensed' : '';
             onload="this.onload=null;this.removeAttribute('media');"
             href="https://fonts.googleapis.com/css?family=Merriweather:300|Raleway:400,700&display=swap"
         />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
         <meta name="generator" content={Astro.generator} />
-        <title>{title}</title>
+        <title>{websiteTitle} | {title}</title>
 
         {sitemap && <link rel="sitemap" href="/sitemap-index.xml" />}
 

@@ -11,7 +11,19 @@ export const GET: APIRoute = async () => {
             date: string;
             tags: string[];
         };
-    }[] = [];
+    }[] = [
+        {
+            body: 'test',
+            data: {
+                categories: [''],
+                date: '',
+                subTitle: '',
+                tags: [],
+                title: 'test',
+            },
+            slug: 'test',
+        },
+    ];
 
     const json = JSON.stringify(
         posts.map(

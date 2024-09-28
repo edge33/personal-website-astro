@@ -1,5 +1,12 @@
 ---
+import type { NotionPage } from '../../notion';
 import './search.css';
+
+interface Props {
+    searchItems: NotionPage[];
+}
+
+const { searchItems } = Astro.props;
 ---
 
 <div class="search-container">
@@ -22,10 +29,8 @@ import './search.css';
     </div>
 </div>
 
-<script is:inline>
+<script is:inline define:vars={{ searchItems }}>
     (async () => {
-        await import('/js/simple-jekyll-search.min.js');
-
         const $searchbar = document.getElementById('searchbar');
         const $searchResults = document.getElementById('search-results');
 
@@ -33,12 +38,39 @@ import './search.css';
             return;
         }
 
-        SimpleJekyllSearch({
-            searchInput: $searchbar,
-            resultsContainer: $searchResults,
-            json: '/search.json',
-            searchResultTemplate: '<a href="{url}" target="_blank">{title}</a>',
-            noResultsText: '',
+        $searchbar.addEventListener('input', (event) => {
+            const searchValue = event.target.value.toLowerCase();
+            $searchResults.innerHTML = '';
+            const results = searchItems.filter((pageProp) => {
+                const { title, slug, date, categories, excerpt } = pageProp;
+
+                if (title.toLowerCase().includes(searchValue)) {
+                    return true;
+                }
+
+                if (slug.toLowerCase().includes(searchValue)) {
+                    return true;
+                }
+
+                if (date.includes(searchValue)) {
+                    return true;
+                }
+
+                if (categories.some((c) => c.includes(searchValue))) {
+                    return true;
+                }
+
+                if (excerpt.toLowerCase().includes(searchValue)) {
+                    return true;
+                }
+            });
+
+            for (const result of results) {
+                $searchResults.insertAdjacentHTML(
+                    'beforeend',
+                    `<a href="/posts/${result.id}" target="_blank">${result.title}</a>`
+                );
+            }
         });
 
         /* hack ios safari unfocus */

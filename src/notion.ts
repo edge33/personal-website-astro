@@ -90,7 +90,7 @@ const notion = new Client({ auth: NOTION_TOKEN });
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
-export async function getPosts({
+async function getPosts({
     currentPageCursor,
 }: {
     currentPageCursor: string | null;
@@ -114,7 +114,22 @@ export async function getPosts({
     };
 }
 
-export const getNotionPage = async (pageId: string) => {
+export async function getAllNotionPages(): Promise<NotionPage[]> {
+    let cursor: string | null = null;
+    const pages: NotionPage[] = [];
+    do {
+        const response = await getPosts({ currentPageCursor: cursor });
+
+        cursor = response.nextPageCursor;
+        pages.push(...response.pages);
+    } while (cursor);
+
+    return pages;
+}
+
+export const getNotionPageMD = async (
+    pageId: string
+): Promise<{ html: string; pageProp: NotionPage } | null> => {
     try {
         const pageDataQueryResult = await notion.pages.retrieve({
             page_id: pageId,

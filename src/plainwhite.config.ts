@@ -1,17 +1,16 @@
 export default {
-    title: 'Your awesome title',
-    author: 'GitHub User',
-    email: 'your-email@domain.com',
+    title: 'efem.dev',
+    author: 'Francesco Maida',
     description:
-        'Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.\n',
+        'Francesco Maida - senior software engineer - find me on github and linkedin',
     show_excerpts: true,
 
     NOTION_TOKEN: import.meta.env.NOTION_TOKEN,
     NOTION_CONTENT_DATABASE_ID: import.meta.env.NOTION_CONTENT_DATABASE_ID,
 
     plainwhite: {
-        name: 'Adam Denisov',
-        tagline: 'Developer. Designer',
+        name: 'Francesco Maida',
+        tagline: 'Senior software engineer',
         date_locale: 'en-UK',
         date_format: {
             day: 'numeric' as const,
@@ -28,12 +27,12 @@ export default {
         analytics_id: undefined,
         disqus_shortname: undefined,
         social_links: {
-            twitter: 'samarsault',
-            github: 'samarsault',
-            linkedIn: 'in/samarsault',
+            // twitter: 'samarsault',
+            github: 'edge33',
+            linkedIn: 'in/francescomaida91',
             // dribbble: 'samarsault',
             // flickr: 'samarsault',
-            instagram: 'samarsault',
+            // instagram: 'samarsault',
             // pinterest: 'samarsault',
             // youtube: 'samarsault',
             // facebook: 'samarsault',
