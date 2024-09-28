@@ -1,24 +1,13 @@
 ---
-// import Search from '../components/Search/Search.astro';
-import { getPosts as getNotionPosts, type NotionPage } from '../notion';
+export const prerender = true;
+// This import needs to stay on top to prevent css clashes
+import Search from '../components/Search/Search.astro';
+import { getAllNotionPages } from '../notion';
 import Layout from '../layouts/Layout.astro';
 import plainwhiteConfig from '../plainwhite.config';
 import formatDate from '../utils/formatDate';
-import Search from '../components/Search/Search.astro';
 
-const getPages = async () => {
-    let cursor: string | null = null;
-    const pages: NotionPage[] = [];
-    do {
-        const response = await getNotionPosts({ currentPageCursor: cursor });
-        cursor = response.nextPageCursor;
-        pages.push(...response.pages);
-    } while (cursor);
-
-    return pages;
-};
-
-const pages = await getPages();
+const pages = await getAllNotionPages();
 
 const { show_excerpts } = plainwhiteConfig;
 ---
@@ -27,7 +16,7 @@ const { show_excerpts } = plainwhiteConfig;
     <ul class="posts">
         <li class="posts-labelgroup" id="posts-labelgroup">
             <h1 id="posts-label">posts</h1>
-            <Search />
+            <Search searchItems={pages} />
         </li>
 
         {
