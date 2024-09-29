@@ -47,7 +47,7 @@ const highlighter = await getSingletonHighlighter({
     // In this case, we include the "js" language specifier to ensure that
     // Shiki applies the appropriate syntax highlighting for Markdown code
     // blocks.
-    langs: ['md', 'js', 'lua'],
+    langs: ['md', 'js', 'lua', 'mermaid'],
 
     themes: ['solarized-dark', 'solarized-light'],
 });
@@ -146,6 +146,10 @@ export const getNotionPageMD = async (
         const marked = new Marked().use(
             markedShiki({
                 highlight(code, lang, props) {
+                    if (lang === 'mermaid') {
+                        return `<pre class="mermaid">${code}</pre>`;
+                    }
+
                     return highlighter.codeToHtml(code, {
                         lang,
                         themes: {

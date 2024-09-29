@@ -4,16 +4,13 @@ import Layout from '../../layouts/Layout.astro';
 import { getAllNotionPages, getNotionPageMD } from '../../notion';
 // import plainwhiteConfig from '../../plainwhite.config';
 import formatDate from '../../utils/formatDate';
+// import Disqus from '../../components/Disqus.astro';
 
 export const getStaticPaths = (async () => {
     const notionPages = await getAllNotionPages();
 
     return notionPages.map((p) => ({ params: { id: p.id } }));
 }) satisfies GetStaticPaths;
-
-// const {
-//     plainwhite: { disqus_shortname },
-// } = plainwhiteConfig;
 
 const { id } = Astro.params;
 
@@ -38,7 +35,7 @@ const { html, pageProp } = data;
                 }
             </div>
             {
-                pageProp.categories.length && (
+                pageProp.categories.length > 0 && (
                     <ul class="post-categories">
                         {pageProp.categories.map((c) => (
                             <li>{c}</li>
@@ -48,33 +45,96 @@ const { html, pageProp } = data;
             }
         </div>
         <div class="post" set:html={html} />
-        <!-- {disqus_shortname &&
-            <>
-                <div id="disqus_thread" style="margin-top:25px"></div>
-                <script is:inline define:vars={{ disqus_shortname }}>
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    const disqus_config = function () {
-                        this.page.url = '{{ page.url | absolute_url }}';
-                        this.page.identifier = '{{ page.url | absolute_url }}';
-                    };
-                    (function () {
-                        const d = document,
-                            s = d.createElement('script');
-                        s.src = `https://${disqus_shortname}.disqus.com/embed.js`;
-                        s.setAttribute('data-timestamp', +new Date());
-                        (d.head || d.body).appendChild(s);
-                    })();
-                </script>
-                <noscript
-                    >Please enable JavaScript to view the <a
-                        href="https://disqus.com/?ref_noscript"
-                        rel="nofollow">comments powered by Disqus.</a
-                    >
-                </noscript>
-            </>         
-        } -->
+
+        <!-- <Disqus /> -->
+
         <span>
             Page generated at {new Date().toLocaleString()}
         </span>
     </div>
 </Layout>
+
+<script>
+    import mermaid from 'mermaid';
+
+    const htmlElement = document.querySelector('html');
+    const isDarkMode = htmlElement?.getAttribute('class')?.includes('dark');
+    mermaid.initialize({
+        theme: isDarkMode ? 'dark' : 'base',
+    });
+
+    const elementCode = '.mermaid';
+
+    const saveOriginalData = function () {
+        return new Promise<void>((resolve, reject) => {
+            try {
+                const els = document.querySelectorAll(elementCode);
+                let count = els.length;
+                els.forEach((element) => {
+                    element.setAttribute(
+                        'data-original-code',
+                        element.innerHTML
+                    );
+                    count--;
+                    if (count == 0) {
+                        resolve();
+                    }
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    };
+    const resetProcessed = function () {
+        return new Promise<void>((resolve, reject) => {
+            try {
+                const els = document.querySelectorAll(elementCode),
+                    count = els.length;
+                els.forEach((element) => {
+                    if (element.getAttribute('data-original-code') != null) {
+                        element.removeAttribute('data-processed');
+                        if (element) {
+                            const attribute =
+                                element.getAttribute('data-original-code');
+                            if (attribute) {
+                                element.innerHTML = attribute;
+                            }
+                        }
+                    }
+                    count--;
+                    if (count == 0) {
+                        resolve();
+                    }
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    };
+
+    await saveOriginalData();
+
+    function callback(
+        mutationsList: MutationRecord[],
+        _observer: MutationObserver
+    ) {
+        mutationsList.forEach(async (mutation) => {
+            if (mutation.attributeName === 'class') {
+                const isDarkMode = htmlElement
+                    ?.getAttribute('class')
+                    ?.includes('dark');
+
+                await resetProcessed();
+
+                mermaid.initialize({ theme: isDarkMode ? 'dark' : 'base' });
+                mermaid.run();
+            }
+        });
+    }
+
+    const mutationObserver = new MutationObserver(callback);
+
+    if (htmlElement) {
+        mutationObserver.observe(htmlElement, { attributes: true });
+    }
+</script>
