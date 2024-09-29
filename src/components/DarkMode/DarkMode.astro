@@ -43,9 +43,12 @@ const { condensedClass } = Astro.props;
     }
 
     window.addEventListener('DOMContentLoaded', toggleSwitch);
-    document
-        .querySelector('#toggle')
-        ?.addEventListener('click', toggleDarkMode);
+
+    const toggles = document.querySelectorAll('#toggle');
+
+    for (const toggle of toggles) {
+        toggle.addEventListener('click', toggleDarkMode);
+    }
 </script>
 
 <div class={`about-footer ${condensedClass}`}>

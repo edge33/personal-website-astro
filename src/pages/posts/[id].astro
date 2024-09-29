@@ -88,8 +88,8 @@ const { html, pageProp } = data;
     const resetProcessed = function () {
         return new Promise<void>((resolve, reject) => {
             try {
-                const els = document.querySelectorAll(elementCode),
-                    count = els.length;
+                const els = document.querySelectorAll(elementCode);
+                let count = els.length;
                 els.forEach((element) => {
                     if (element.getAttribute('data-original-code') != null) {
                         element.removeAttribute('data-processed');
