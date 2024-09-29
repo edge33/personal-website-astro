@@ -37,7 +37,7 @@ const { show_excerpts } = plainwhiteConfig;
                             <i class="icon-calendar" />
                             {`${formatDate(p.date.split(' ')[0])}`}
                         </div>
-                        {p.categories.length && (
+                        {p.categories.length > 0 && (
                             <ul class="post-categories">
                                 {p.categories.map((c) => (
                                     <li>{c}</li>
