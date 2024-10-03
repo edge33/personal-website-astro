@@ -47,10 +47,6 @@ const { html, pageProp } = data;
         <div class="post" set:html={html} />
 
         <!-- <Disqus /> -->
-
-        <span>
-            Page generated at {new Date().toLocaleString()}
-        </span>
     </div>
 </Layout>
 
@@ -61,6 +57,9 @@ const { html, pageProp } = data;
     const isDarkMode = htmlElement?.getAttribute('class')?.includes('dark');
     mermaid.initialize({
         theme: isDarkMode ? 'dark' : 'base',
+        flowchart: {
+            htmlLabels: false,
+        },
     });
 
     const elementCode = '.mermaid';
@@ -126,7 +125,12 @@ const { html, pageProp } = data;
 
                 await resetProcessed();
 
-                mermaid.initialize({ theme: isDarkMode ? 'dark' : 'base' });
+                mermaid.initialize({
+                    theme: isDarkMode ? 'dark' : 'base',
+                    flowchart: {
+                        htmlLabels: false,
+                    },
+                });
                 mermaid.run();
             }
         });
