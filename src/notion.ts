@@ -99,8 +99,7 @@ async function getPosts({
         database_id: NOTION_CONTENT_DATABASE_ID,
         filter: { property: 'Published', checkbox: { equals: true } },
 
-        ...(currentPageCursor ? { start_cursor: currentPageCursor } : {}),
-        page_size: 1,
+        ...(currentPageCursor ? { start_cursor: currentPageCursor } : {})
     });
 
     const pages = notionPages.results.map((r) =>
