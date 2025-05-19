@@ -1,4 +1,4 @@
-import plainwhiteConfig from '../plainwhite.config';
+import plainwhiteConfig from '../plainwhite.config.ts';
 
 const {
     plainwhite: { date_format, date_locale },

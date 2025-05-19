@@ -1,5 +1,5 @@
 import { Client } from '@notionhq/client';
-import plainwhiteConfig from './plainwhite.config';
+import plainwhiteConfig from './plainwhite.config.ts';
 import { NotionToMarkdown } from 'notion-to-md';
 import { marked, Marked } from 'marked';
 import markedShiki from 'marked-shiki';
@@ -13,7 +13,7 @@ import {
     transformerMetaHighlight,
     transformerMetaWordHighlight,
 } from '@shikijs/transformers';
-import type { DatabaseObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import type { DatabaseObjectResponse } from '@notionhq/client/build/src/api-endpoints.js';
 
 export type NotionPageResponse = {
     pages: NotionPage[];
@@ -99,7 +99,7 @@ async function getPosts({
         database_id: NOTION_CONTENT_DATABASE_ID,
         filter: { property: 'Published', checkbox: { equals: true } },
 
-        ...(currentPageCursor ? { start_cursor: currentPageCursor } : {})
+        ...(currentPageCursor ? { start_cursor: currentPageCursor } : {}),
     });
 
     const pages = notionPages.results.map((r) =>

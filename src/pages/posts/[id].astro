@@ -7,7 +7,11 @@ import formatDate from '../../utils/formatDate';
 
 const { id } = Astro.params;
 
-const data = await getNotionPageMD(id || '');
+if (!id) {
+    return Astro.redirect('/404');
+}
+
+const data = await getNotionPageMD(id);
 
 if (!data) {
     return Astro.redirect('/404');
