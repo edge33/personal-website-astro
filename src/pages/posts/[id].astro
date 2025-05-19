@@ -12,6 +12,8 @@ export const getStaticPaths = (async () => {
     return notionPages.map((p) => ({ params: { id: p.id } }));
 }) satisfies GetStaticPaths;
 
+export const prerender = true;
+
 const { id } = Astro.params;
 
 const data = await getNotionPageMD(id);
@@ -45,7 +47,6 @@ const { html, pageProp } = data;
             }
         </div>
         <div class="post" set:html={html} />
-
         <!-- <Disqus /> -->
     </div>
 </Layout>
