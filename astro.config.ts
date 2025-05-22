@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import plainwhiteConfig from './src/plainwhite.config.ts';
 import { loadEnv } from 'vite';
+import vercel from '@astrojs/vercel';
 
 const { CACHE_DURATION, CACHE_BYPASS_TOKEN } = loadEnv(
     process.env.NODE_ENV as string,
@@ -8,7 +9,7 @@ const { CACHE_DURATION, CACHE_BYPASS_TOKEN } = loadEnv(
     ''
 );
 
-import vercel from '@astrojs/vercel';
+console.log({ CACHE_DURATION, CACHE_BYPASS_TOKEN });
 
 const {
     plainwhite: { host },
