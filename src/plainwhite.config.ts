@@ -10,6 +10,7 @@ export default {
 
     plainwhite: {
         name: 'Francesco Maida',
+        host: 'https://efem.dev',
         tagline: 'Senior software engineer',
         date_locale: 'en-UK',
         date_format: {
