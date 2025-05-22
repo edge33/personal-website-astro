@@ -1,19 +1,11 @@
 ---
-import type { GetStaticPaths } from 'astro';
 import Layout from '../../layouts/Layout.astro';
-import { getAllNotionPages, getNotionPageMD } from '../../notion';
+import { getNotionPageMD } from '../../notion';
 // import plainwhiteConfig from '../../plainwhite.config';
 import formatDate from '../../utils/formatDate';
 // import Disqus from '../../components/Disqus.astro';
 
 const { id } = Astro.params;
-export const prerender = true;
-
-export const getStaticPaths = (async () => {
-    const notionPages = await getAllNotionPages();
-
-    return notionPages.map((p) => ({ params: { id: p.id } }));
-}) satisfies GetStaticPaths;
 
 if (!id) {
     return Astro.redirect('/404');
