@@ -9,7 +9,9 @@ const {
 
 export async function GET() {
     const pages = await getAllNotionPages();
-    const urls = pages.map(({ id }) => `<url><loc>${host}/${id}</loc></url>`);
+    const urls = pages.map(
+        ({ id }) => `<url><loc>${host}/posts/${id}</loc></url>`
+    );
 
     return new Response(
         `<?xml version="1.0" encoding="UTF-8"?>
