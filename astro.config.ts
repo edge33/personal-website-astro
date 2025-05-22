@@ -9,8 +9,6 @@ const { CACHE_DURATION, CACHE_BYPASS_TOKEN } = loadEnv(
     ''
 );
 
-console.log({ CACHE_DURATION, CACHE_BYPASS_TOKEN });
-
 const {
     plainwhite: { host },
 } = plainwhiteConfig;

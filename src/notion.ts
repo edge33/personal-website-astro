@@ -28,6 +28,7 @@ export type NotionPage = {
     date: string;
     categories: string[];
     excerpt: string;
+    published: boolean;
 };
 
 interface TextObject {
@@ -63,6 +64,7 @@ const mapPageData = (notionResponse: DatabaseObjectResponse): NotionPage => {
         title: properties.Title.title[0].text.content,
         slug: properties.Slug.rich_text[0].plain_text,
         date: properties.Date.created_time,
+        published: properties.Published.checkbox,
         categories: properties.Tags.multi_select.map(
             ({ name }: { name: string }) => name
         ),
@@ -137,6 +139,10 @@ export const getNotionPageMD = async (
         const pageData = mapPageData(
             pageDataQueryResult as unknown as DatabaseObjectResponse
         );
+
+        if (!pageData.published) {
+            return null;
+        }
 
         const mdblocks = await n2m.pageToMarkdown(pageId);
 
