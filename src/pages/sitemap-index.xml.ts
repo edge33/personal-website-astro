@@ -1,18 +1,11 @@
-// src/pages/sitemap.xml.ts
-import { getAllNotionPages } from '../notion.ts';
+import type { APIRoute } from 'astro';
 
-import config from '../plainwhite.config.ts';
-
-const {
-    plainwhite: { host },
-} = config;
-
-export async function GET() {
+export const GET: APIRoute = ({ site }) => {
     return new Response(
         `<?xml version="1.0" encoding="UTF-8"?>
             <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
                 <sitemap>
-                    <loc>${host}/sitemap-0.xml</loc>
+                    <loc>${site}/sitemap-0.xml</loc>
                     <lastmod>${new Date().toISOString()}</lastmod>
                 </sitemap>
             </sitemapindex>`,
@@ -22,16 +15,4 @@ export async function GET() {
             },
         }
     );
-}
-
-// <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-//     <url><loc>${host}</loc></url>
-//   ${urls.join('\n')}
-//   ${new Date().toString()}
-// </urlset>`,
-//     {
-//         headers: {
-//             'Content-Type': 'application/xml',
-//         },
-//     }
-// );
+};

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://efem.dev/sitemap-index.xml
