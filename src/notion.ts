@@ -29,6 +29,7 @@ export type NotionPage = {
     categories: string[];
     excerpt: string;
     published: boolean;
+    lastEditedTime: string;
 };
 
 interface TextObject {
@@ -69,6 +70,7 @@ const mapPageData = (notionResponse: DatabaseObjectResponse): NotionPage => {
             ({ name }: { name: string }) => name
         ),
         excerpt: convertToHtml(properties.Excerpt.rich_text),
+        lastEditedTime: notionResponse.last_edited_time,
     };
 };
 

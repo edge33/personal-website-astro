@@ -1,4 +1,3 @@
-// src/pages/sitemap.xml.ts
 import { getAllNotionPages } from '../notion.ts';
 
 import config from '../plainwhite.config.ts';
@@ -10,7 +9,11 @@ const {
 export async function GET() {
     const pages = await getAllNotionPages();
     const urls = pages.map(
-        ({ id }) => `<url><loc>${host}/posts/${id}</loc></url>`
+        ({ id, lastEditedTime }) => `
+        <url>
+            <loc>${host}/posts/${id}</loc>
+            <lastmod>${lastEditedTime}</lastmod>
+        </url>`
     );
 
     return new Response(
