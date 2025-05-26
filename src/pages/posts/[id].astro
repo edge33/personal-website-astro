@@ -1,5 +1,4 @@
 ---
-import { log } from 'mermaid/dist/logger.js';
 import Layout from '../../layouts/Layout.astro';
 import { getNotionPageMD } from '../../notion';
 // import plainwhiteConfig from '../../plainwhite.config';
@@ -11,8 +10,6 @@ export const prerender = false;
 if (!id) {
     return Astro.redirect('/404');
 }
-
-console.log('THE FALLBACK PAGES');
 
 const data = await getNotionPageMD(id);
 

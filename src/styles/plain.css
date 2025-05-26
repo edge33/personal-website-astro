@@ -1,5 +1,8 @@
 @import "ext/normalize";
 @import "ext/fonts";
+@import "@fontsource/merriweather/300.css";
+@import "@fontsource/raleway/400.css";
+@import "@fontsource/raleway/700.css";
 
 *,
 *:before,
