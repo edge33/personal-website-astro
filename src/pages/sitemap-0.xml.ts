@@ -16,8 +16,7 @@ export const GET: APIRoute = async ({ site }) => {
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         <url><loc>${site}</loc></url>
       ${urls.join('\n')}
-      ${new Date().toString()}
-    </urlset>`,
+      </urlset>`,
         {
             headers: {
                 'Content-Type': 'application/xml',
@@ -25,3 +24,5 @@ export const GET: APIRoute = async ({ site }) => {
         }
     );
 };
+
+// ${new Date().toString()}
