@@ -1,20 +1,26 @@
 ---
-import { log } from 'mermaid/dist/logger.js';
+import type { GetStaticPaths } from 'astro';
 import Layout from '../../layouts/Layout.astro';
-import { getNotionPageMD } from '../../notion';
+import { getAllNotionPages, getNotionPageMD } from '../../notion';
 // import plainwhiteConfig from '../../plainwhite.config';
 import formatDate from '../../utils/formatDate';
 // import Disqus from '../../components/Disqus.astro';
 
-const { id } = Astro.params;
-export const prerender = false;
-if (!id) {
+const { path } = Astro.params;
+export const getStaticPaths = (async () => {
+    const notionPages = await getAllNotionPages();
+
+    return notionPages.map((p) => ({ params: { path: p.id } }));
+}) satisfies GetStaticPaths;
+
+console.log('THE RENDERED');
+
+export const prerender = true;
+if (!path) {
     return Astro.redirect('/404');
 }
 
-console.log('THE FALLBACK PAGES');
-
-const data = await getNotionPageMD(id);
+const data = await getNotionPageMD(path);
 
 if (!data) {
     return Astro.redirect('/404');
@@ -25,7 +31,7 @@ const { html, pageProp } = data;
 
 <Layout title={pageProp.title} pageType="post">
     <div class="post-container">
-        <a class="post-link" href={id}>
+        <a class="post-link" href={path}>
             <h2 class="post-title">{pageProp.title}</h2>
         </a>
         <div class="post-meta">
