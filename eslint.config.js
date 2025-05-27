@@ -22,6 +22,7 @@ export default [
                     caughtErrorsIgnorePattern: '^_',
                 },
             ],
+            'prefer-template': 'error'
         },
     },
     {

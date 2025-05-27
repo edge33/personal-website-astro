@@ -7,6 +7,7 @@ export default {
 
     NOTION_TOKEN: import.meta.env.NOTION_TOKEN,
     NOTION_CONTENT_DATABASE_ID: import.meta.env.NOTION_CONTENT_DATABASE_ID,
+    NOTION_VERIFICATION_TOKEN: import.meta.env.NOTOTION_VERIFICATION_TOKEN,
 
     plainwhite: {
         name: 'Francesco Maida',
