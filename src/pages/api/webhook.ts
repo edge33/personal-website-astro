@@ -10,10 +10,13 @@ const return404 = () => {
     });
 };
 
-export const POST: APIRoute = async ({ params, request }) => {
-    const postedVerificationToken = params.verification_token;
+export const POST: APIRoute = async ({ request }) => {
+    const body = await request.json();
+    console.log('incoming request', { body });
+
+    const postedVerificationToken = body.verification_token;
+    console.log('incoming request', { postedVerificationToken });
     const { NOTION_VERIFICATION_TOKEN } = plainwhiteConfig;
-    console.log('incoming request', { params });
 
     if (postedVerificationToken) {
         if (NOTION_VERIFICATION_TOKEN !== postedVerificationToken) {
