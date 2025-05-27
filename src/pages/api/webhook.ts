@@ -13,6 +13,7 @@ const return404 = () => {
 export const POST: APIRoute = async ({ params, request }) => {
     const postedVerificationToken = params.verification_token;
     const { NOTION_VERIFICATION_TOKEN } = plainwhiteConfig;
+    console.log('incoming request', { params });
 
     if (postedVerificationToken) {
         if (NOTION_VERIFICATION_TOKEN !== postedVerificationToken) {
