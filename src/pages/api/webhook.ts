@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { createHmac, timingSafeEqual } from 'crypto';
 import plainwhiteConfig from '../../plainwhite.config.ts';
 
 // const return404 = () => {
@@ -43,6 +44,14 @@ export const POST: APIRoute = async ({ request }) => {
         console.log('Signature not present, ignoring the request');
         return return200();
     }
+    const calculatedSignature = `sha256=${createHmac('sha256', NOTION_VERIFICATION_TOKEN).update(JSON.stringify(body)).digest('hex')}`;
+
+    const isTrustedPayload = timingSafeEqual(
+        Buffer.from(calculatedSignature),
+        Buffer.from(signature)
+    );
+
+    console.log('trusted payalod', isTrustedPayload);
 
     return return200();
 };
