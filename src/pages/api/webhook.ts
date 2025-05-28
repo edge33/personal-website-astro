@@ -2,14 +2,12 @@ import type { APIRoute } from 'astro';
 import { createHmac, timingSafeEqual } from 'crypto';
 import plainwhiteConfig from '../../plainwhite.config.ts';
 
-// const return404 = () => {
-//     return new Response(null, {
-//         status: 404,
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     });
-// };
+type NotionUpdate = {
+    entity: {
+        id: string;
+        type: string;
+    };
+};
 
 const return200 = () =>
     new Response(JSON.stringify({ hello: 'world' }), {
@@ -19,13 +17,11 @@ const return200 = () =>
         },
     });
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, site }) => {
     const body = await request.json();
-    console.log('incoming request', { body });
 
     const postedVerificationToken = body.verification_token;
-    console.log('incoming request', { postedVerificationToken });
-    const { NOTION_VERIFICATION_TOKEN } = plainwhiteConfig;
+    const { NOTION_VERIFICATION_TOKEN, CACHE_BYPASS_TOKEN } = plainwhiteConfig;
 
     if (postedVerificationToken) {
         if (NOTION_VERIFICATION_TOKEN !== postedVerificationToken) {
@@ -51,7 +47,33 @@ export const POST: APIRoute = async ({ request }) => {
         Buffer.from(signature)
     );
 
-    console.log('trusted payalod', isTrustedPayload);
+    if (!isTrustedPayload) {
+        console.log('Payload verification failed, ignoring the request');
+        return return200();
+    }
+
+    const notionUpdate: NotionUpdate = body;
+    const pageId = notionUpdate.entity.id;
+    console.log(`revalidating index and page ${pageId}`);
+    const origin = site?.origin || '';
+    const urlsToUpdate = [
+        origin,
+        `${origin}/posts/${pageId}`,
+        `${origin}/sitemap-index.xml`,
+        `${origin}/sitemap-0.xml`,
+    ];
+
+    try {
+        await Promise.all(
+            urlsToUpdate.map((url) =>
+                fetch(url, {
+                    headers: { 'x-prerender-revalidate': CACHE_BYPASS_TOKEN },
+                })
+            )
+        );
+    } catch (error) {
+        console.error(error);
+    }
 
     return return200();
 };

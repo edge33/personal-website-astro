@@ -8,6 +8,8 @@ export default {
     NOTION_TOKEN: import.meta.env.NOTION_TOKEN,
     NOTION_CONTENT_DATABASE_ID: import.meta.env.NOTION_CONTENT_DATABASE_ID,
     NOTION_VERIFICATION_TOKEN: import.meta.env.NOTOTION_VERIFICATION_TOKEN,
+    CACHE_BYPASS_TOKEN: import.meta.env.CACHE_BYPASS_TOKEN,
+    CACHE_DURATION: import.meta.env.CACHE_DURATION,
 
     plainwhite: {
         name: 'Francesco Maida',
