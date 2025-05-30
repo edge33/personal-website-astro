@@ -24,5 +24,3 @@ export const GET: APIRoute = async ({ site }) => {
         }
     );
 };
-
-// ${new Date().toString()}
