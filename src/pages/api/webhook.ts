@@ -54,26 +54,26 @@ export const POST: APIRoute = async ({ request, site }) => {
 
     const notionUpdate: NotionUpdate = body;
     const pageId = notionUpdate.entity.id;
-    // console.log(`revalidating index and page ${pageId}`);
-    // const origin = site?.origin || '';
-    // const urlsToUpdate = [
-    //     origin,
-    //     `${origin}/posts/${pageId}`,
-    //     `${origin}/sitemap-index.xml`,
-    //     `${origin}/sitemap-0.xml`,
-    // ];
+    console.log(`revalidating index and page ${pageId}`);
+    const origin = site?.origin || '';
+    const urlsToUpdate = [
+        origin,
+        `${origin}/posts/${pageId}`,
+        `${origin}/sitemap-index.xml`,
+        `${origin}/sitemap-0.xml`,
+    ];
 
-    // try {
-    //     await Promise.all(
-    //         urlsToUpdate.map((url) =>
-    //             fetch(url, {
-    //                 headers: { 'x-prerender-revalidate': CACHE_BYPASS_TOKEN },
-    //             })
-    //         )
-    //     );
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    try {
+        await Promise.all(
+            urlsToUpdate.map((url) =>
+                fetch(url, {
+                    headers: { 'x-prerender-revalidate': CACHE_BYPASS_TOKEN },
+                })
+            )
+        );
+    } catch (error) {
+        console.error(error);
+    }
 
     return return200();
 };
