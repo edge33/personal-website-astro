@@ -19,7 +19,7 @@ export default defineConfig({
     output: 'server',
     adapter: vercel({
         isr: {
-            expiration: Number(CACHE_DURATION) || 60 * 62 * 24,
+            expiration: Number(CACHE_DURATION) || 60 * 60 * 24,
             bypassToken: CACHE_BYPASS_TOKEN,
             exclude: [
                 /^\/api\/.+/, // Regular expressions supported since @astrojs/vercel@v8.1.0
