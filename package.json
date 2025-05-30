@@ -13,7 +13,10 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/vercel": "^8.1.4",
+    "vite": "^6.3.5",
     "@notionhq/client": "^2.2.15",
+    "@fontsource/merriweather": "^5.2.7",
+    "@fontsource/raleway": "^5.2.5",
     "@shikijs/transformers": "^1.19.0",
     "@types/node": "^22.15.23",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
@@ -31,12 +34,9 @@
     "prettier-plugin-astro": "^0.14.1",
     "shiki": "^1.19.0",
     "typescript": "^5.6.2",
-    "typescript-eslint": "^8.7.0",
-    "vite": "^6.3.5"
+    "typescript-eslint": "^8.7.0"
   },
   "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b",
   "dependencies": {
-    "@fontsource/merriweather": "^5.2.7",
-    "@fontsource/raleway": "^5.2.5"
   }
 }
